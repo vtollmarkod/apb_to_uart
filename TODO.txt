@@ -1,1 +1,26 @@
 https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
+https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html
+https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/
+
+
+
+
+PROCITATI :
+
+verilab.com/files/use_the_sequence_luke_1.pdf
+
+Sekvencu sekvenci mora da prvo randomizujem iz testa, pa onda pokrecem na zadatom sekvenceru
+
+INTERFACE 
+
+
+modport apb ( input todo,
+              output todo,
+              inout todo);
+ 
+  modport uart ( output todo,
+                  input  todo);
+
+
+
+
