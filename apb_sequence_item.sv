@@ -3,7 +3,8 @@ typedef enum {READ,WRITE} rw_mode;
 
 class apb_sequence_item extends uvm_sequence_item;
 	rand bit [31:0] paddr;
-	rand bit [31:0] pdata;
+	rand bit [31:0] prdata;
+	rand bit [31:0] pwdata;
 	rand bit pwrite;
 	rand bit psel;
 	rand bit penable;
@@ -15,7 +16,8 @@ class apb_sequence_item extends uvm_sequence_item;
 		
 	`uvm_object_utils (apb_sequence_item)
 	`uvm_field_int(paddr,UVM_DEFAULT)
-	`uvm_field_int(pdata,UVM_DEFAULT)
+	`uvm_field_int(pwdata,UVM_DEFAULT)
+	`uvm_field_int(prdata,UVM_DEFAULT)
 	`uvm_field_int(pwrite,UVM_DEFAULT)
 	`uvm_field_int(psel,UVM_DEFAULT)
 	`uvm_field_int(penable, UVM_DEFAULT)
