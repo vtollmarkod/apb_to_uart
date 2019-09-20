@@ -61,7 +61,7 @@ class more_apb_read_sequence extends uvm_sequence #(apb_sequence_item);
 			begin
 				apb_read_sequence req;
 				req = apb_read_sequence::type_id::create("req");
-				req.start(TODO_SEKVENCER,this); // Zato sto sekvenca zove sekvencu
+				req.start(apb_sequencer_h,this); // Zato sto sekvenca zove sekvencu
 			end
 	endtask:body
 endclass:more_apb_read_sequence
@@ -82,7 +82,7 @@ class more_apb_write_sequence extends uvm_sequence #(apb_sequence_item);
 			begin
 				apb_write_sequence req;
 				req = apb_write_sequence::type_id::create("req");
-				req.start(TODO_SEKVENCER,this); // Zato sto sekvenca zove sekvencu
+				req.start(apb_sequencer_h,this); // ============== NISAM SIGURAN !!Zato sto sekvenca zove sekvencu
 			end
 	endtask:body
 endclass:more_apb_write_sequence

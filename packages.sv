@@ -1,6 +1,7 @@
 package my_pkg;
 
 	import uvm_pkg::*;
+	`include "my_configuration.sv"
     `include "apb_sequence_item.sv" 
     `include "apb_sequencer.sv"
     `include "apb_sequence.sv"
@@ -8,6 +9,6 @@ package my_pkg;
 	`include "apb_monitor.sv"
 	`include "apb_agent.sv"	
     `include "my_enviroment.sv"
-    //`include TEST
- 
+    `include "my_tests.sv"
+
 endpackage: my_pkg

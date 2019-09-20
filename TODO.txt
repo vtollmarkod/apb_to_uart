@@ -8,6 +8,11 @@ https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/
 PROCITATI :
 
 verilab.com/files/use_the_sequence_luke_1.pdf
+https://www.youtube.com/watch?v=S2JTr4uQwks
+
+Dobar clanak o konfiguracionim objektima
+http://www.learnuvmverification.com/index.php/2015/07/22/uvm-configuration-object-concept/
+http://www.learnuvmverification.com/index.php/2015/07/13/application-of-virtual-interface-and-uvm_config_db/
 
 Sekvencu sekvenci mora da prvo randomizujem iz testa, pa onda pokrecem na zadatom sekvenceru
 
