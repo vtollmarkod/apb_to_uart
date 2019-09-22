@@ -1,5 +1,5 @@
 class apb_agent extends uvm_agent;
-	`uvm_components_utils (apb_agent)
+	`uvm_component_utils(apb_agent)
 
 	apb_driver apb_driver_h;
 	apb_monitor apb_monitor_h;
@@ -17,6 +17,6 @@ class apb_agent extends uvm_agent;
 	endfunction
 
 	virtual function void connect_phase (uvm_phase phase);
-		apb_driver_h.seq_item_port.connect(apb_sequencer_h.seq_item_port.connect);
+      apb_driver_h.seq_item_port.connect(apb_sequencer_h.seq_item_export);      
 	endfunction
 endclass:apb_agent

@@ -1,5 +1,5 @@
 class my_enviroment extends uvm_env;
-	`uvm_component_utils (my_env)
+	`uvm_component_utils (my_enviroment)
 
 	apb_agent apb_agent_h;
 
@@ -9,7 +9,7 @@ class my_enviroment extends uvm_env;
 
 	virtual function void build_phase (uvm_phase phase);
 		super.build_phase(phase);
-		apb_agent_h = apb_agent::type_id::create("apb_agent_h");
+      apb_agent_h = apb_agent::type_id::create("apb_agent_h",this);
 	endfunction
 
 endclass:my_enviroment

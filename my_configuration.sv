@@ -1,9 +1,9 @@
 class my_configuration extends uvm_object;
-	`uvm_object_utils (my_cgf)
+	`uvm_object_utils (my_configuration)
 
-	function new(string name);
+  	function new (string name = "");
 		super.new(name);
-	endfunction
+    endfunction
 
 	// Declaration of virtual interface
 	virtual my_interface my_interface_h;

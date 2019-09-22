@@ -16,16 +16,10 @@ http://www.learnuvmverification.com/index.php/2015/07/13/application-of-virtual-
 
 Sekvencu sekvenci mora da prvo randomizujem iz testa, pa onda pokrecem na zadatom sekvenceru
 
-INTERFACE 
+ALWAYS Block
+= is blocking statement. In an always block, the line of code will be executed only after it's previous line has executed. Hence, they happens one after the other, just like combinatoral logics in loop.
 
-
-modport apb ( input todo,
-              output todo,
-              inout todo);
- 
-  modport uart ( output todo,
-                  input  todo);
-
+<= is non-blocking in nature. This means that in an always block, every line will be executed in parallel. Hence leading to implementation of sequential elements.
 
 
 

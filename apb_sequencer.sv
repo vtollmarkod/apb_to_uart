@@ -1,4 +1,4 @@
-class apb_sequencer extends uvm_sequencer #(uvm_sequence_item);
+class apb_sequencer extends uvm_sequencer #(apb_sequence_item);
 	`uvm_component_utils(apb_sequencer)
 
 	function new (string name, uvm_component parent);

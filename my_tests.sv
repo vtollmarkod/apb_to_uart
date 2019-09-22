@@ -1,5 +1,5 @@
 class apb_write_test extends uvm_test;
-	`uvm_component_utils(my_test)
+	`uvm_component_utils(apb_write_test)
 
 	function new(string name, uvm_component parent);
 		super.new(name,parent);
