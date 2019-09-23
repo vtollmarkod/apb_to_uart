@@ -13,7 +13,9 @@ interface my_interface (input bit clk , input bit rst);
 	// UART aprt
 	logic rx;
 	logic tx;
+	
 
+  
 endinterface
 
 

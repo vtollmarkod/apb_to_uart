@@ -36,31 +36,38 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
  
 	virtual task drive_item (apb_sequence_item req); // Nedostaje mi jedna transakcija, procitati sinhro D->S
 		@(posedge my_interface_h.clk);
+			my_interface_h.psel <= 0;
+			my_interface_h.penable <= 0;
+			//my_interface_h.pwrite <= 1;
+			//my_interface_h.paddr <= 32'h0;
+			//my_interface_h.pwdata <= 32'h0;
       		
       		// IDLE state (check this from diagram)
-      		repeat (req.delay) 
+      		repeat (req.delay)
             	@(posedge my_interface_h.clk);
-      
-            //SETUP WRITE Phase
-      			if (req.mode == WRITE)
-            	begin
-					my_interface_h.pwrite <= req.mode; // Write is 1 in enum 
-					my_interface_h.paddr = req.paddr;
-					my_interface_h.pwdata = req.pwdata;
-					my_interface_h.psel <=1;
-					// ACTIVE Phase
+					
+	      	if (req.mode == WRITE)
+		    	begin //SETUP WRITE Phase
+					my_interface_h.pwrite <= 1; // Write is 1 in enum
+					my_interface_h.psel <= 1; 
+					my_interface_h.paddr <= req.paddr;
+					my_interface_h.pwdata <= req.pwdata;
+					// ACTIVE WRITE Phase
                   	repeat (1) 
 						@(posedge my_interface_h.clk);
-						my_interface_h.penable <=1;
-              end           	
-           		
-   
-		endtask
+					my_interface_h.penable <= 1;
+					// Whait for PREADY
+                  	while(!my_interface_h.pready)
+						@(posedge my_interface_h.clk);
+
+		    	end
+      				
+		   
+	endtask
   
 
 
       
-  	
 	
 
 endclass:apb_driver

@@ -1,3 +1,15 @@
+1. git status
+2. git add .
+3. git commit -m "Your message about the commit"
+4. git push origin master
+5. vtollmarkod praksa2019
+6. git pull origin master
+https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners 
+
+(git config --global user.name "markod"   git config --global user.email markod@thevtool.com)
+
+
+
 https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html
 https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/

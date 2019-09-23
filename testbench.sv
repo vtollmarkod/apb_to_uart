@@ -11,6 +11,28 @@ module top;
 	always #10 clk = ~clk; 
 
   
+// ============================================================  
+  	// Just to test APB RESPONSE
+  	bit pready_tb = 0;
+  	
+  	always
+      begin
+        #100
+        my_interface_h.pready = pready_tb;
+        pready_tb =~pready_tb;
+      end
+  	
+  	always
+      begin
+        #100 
+        my_interface_h.prdata = $urandom_range(1,100);
+      end
+// ============================================================
+  
+  
+  
+  
+  
 
 // Interface
   my_interface my_interface_h (clk);
