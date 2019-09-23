@@ -21,33 +21,37 @@ class apb_monitor extends uvm_monitor;
 		// Kreiraj paket pokupi sa magistrale sta treba
       	apb_sequence_item  monitor_data =  apb_sequence_item::type_id::create("monitor_data",this);
       	forever begin
-			@(posedge my_interface_h.clk);
+			   @(posedge my_interface_h.clk);
           		begin
+                monitor_data.paddr<=32'h0;
+                monitor_data.pwdata=32'h0;
+                monitor_data.mode=NONE;
                   @(negedge my_interface_h.penable); // Select, Penable,Pready
                     	begin
-                        	monitor_data.paddr = my_interface_h.paddr;
-                          	monitor_data.prdata = my_interface_h.prdata;
-                          	monitor_data.pwdata = my_interface_h.pwdata;
+                          monitor_data.paddr = my_interface_h.paddr;
+                          monitor_data.prdata = my_interface_h.prdata;
+                          monitor_data.pwdata = my_interface_h.pwdata;
 							// Sada ovde ne znam delay i koje je operacija to opeglati
-                          	if (my_interface_h.pwrite)
-                              	monitor_data.mode = WRITE;
-                          	monitor_data.delay = 0; // Do I need delay for scoreboard? For now it is 0
-                          	monitor_data.print();
-                        end	
-                end
-          
-          
-          
-          
-        end
+                          if (my_interface_h.pwrite)
+                            begin
+                              monitor_data.mode = WRITE;
+                          	 monitor_data.delay = 0; // Do I need delay for scoreboard? For now it is 0
+                          	 monitor_data.print();
+                            end
 
+                          if(!my_interface_h.pwrite)
+                            begin
+                              monitor_data.mode = READ;
+                              monitor_data.delay = 0;
+                              monitor_data.print();
+                            end
+                      end//negedege  
+              end//posedge
+            end//forever
       endtask
       
       
-  
-  
-  
-  
+
   
   
 endclass:apb_monitor

@@ -8,7 +8,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 (git config --global user.name "markod"   git config --global user.email markod@thevtool.com)
 
-
+vcs -sverilog -full64 +vcs+vcdpluson -timescale=1ns/1ps -debug_access+r+w+nomemcbk -debug_region+cell +vpi testbench.sv design.sv -l apb_to_uart.log -debug_acc+all -lca -R -ntb_opts uvm-1.2 +UVM_TESTNAME=apb_write_test
 
 https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html
@@ -35,3 +35,9 @@ ALWAYS Block
 
 
 
+PREPRAVKE :
+
+1. Monitor radi na negedge ne treba tako
+2. Sinhronizovati pread i pready sa clk ! Potom proveriti APB drajver i monitor.
+3. Los deo READ drajvera, mora se drugacije imeplementirati posto me zezaju ivice!!! Drugi uslob iskoristiti.
+	Greska se javlja na repeat(4)

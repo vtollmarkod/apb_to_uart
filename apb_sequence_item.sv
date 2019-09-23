@@ -1,4 +1,4 @@
-typedef enum {READ,WRITE} rw_mode;
+typedef enum {READ,WRITE,NONE} rw_mode;
 
 
 class apb_sequence_item extends uvm_sequence_item;

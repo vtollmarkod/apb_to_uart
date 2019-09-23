@@ -9,27 +9,18 @@ module top;
   	// Generate clock
 	bit clk=0;
 	always #10 clk = ~clk; 
-
+  bit pready_tb = 0;
   
-// ============================================================  
-  	// Just to test APB RESPONSE
-  	bit pready_tb = 0;
-  	
-  	always
-      begin
-        #100
+  always
+    begin
+      repeat(4)
+        @(posedge my_interface_h.clk)
+      
         my_interface_h.pready = pready_tb;
         pready_tb =~pready_tb;
-      end
-  	
-  	always
-      begin
-        #100 
         my_interface_h.prdata = $urandom_range(1,100);
-      end
-// ============================================================
-  
-  
+      
+    end
   
   
   
