@@ -8,7 +8,7 @@ class apb_read_sequence extends uvm_sequence #(apb_sequence_item);
 	endfunction
 
 	task body();
-      	repeat(10)
+      	repeat(15)
 			begin
               req = apb_sequence_item::type_id::create("req");
               start_item(req);

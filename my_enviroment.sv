@@ -12,4 +12,25 @@ class my_enviroment extends uvm_env;
       apb_agent_h = apb_agent::type_id::create("apb_agent_h",this);
 	endfunction
 
+
+
+/*
+    /// Reset Phase Task, reset is Active LOW
+    task reset_phase(uvm_phase phase);
+      phase.raise_objection(this);
+      dut_vi.reset = 0;
+      #100;
+      dut_vi.reset = 1;
+      phase.drop_objection(this);
+    endtask: reset_phase 
+*/
+
+
+
+
+
+
+
+
+
 endclass:my_enviroment
