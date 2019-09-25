@@ -24,7 +24,7 @@ class apb_sequence_item extends uvm_sequence_item;
 
 	constraint apb_sequence_item {
       	paddr inside {[1:100]};
-      	prdata == 32'h0;
+      	prdata == 32'hffff_ffff;
       	pwdata inside {[400:500]};
 		delay inside {[5:10]};
 	}

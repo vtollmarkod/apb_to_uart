@@ -3,14 +3,14 @@
 
 
 module top;
-	import uvm_pkg::*;
-	import my_pkg::*;
+  import uvm_pkg::*;
+  import my_pkg::*;
   
   
-  	// Generate clock
-	bit clk = 0;
+    // Generate clock
+  bit clk = 0;
   bit rst = 1;
-	always #10 clk = ~clk; 
+  always #10 clk = ~clk; 
 
 
   // Generate Reset signal
@@ -46,7 +46,7 @@ always
 
 
 // Database
-	initial begin 									// null calling from module *= uvm_test_top
+  initial begin                   // null calling from module *= uvm_test_top
       uvm_config_db #(virtual apb_interface)::set(null,"*","apb_interface", apb_interface_h);
       
       
@@ -61,14 +61,13 @@ always
     $dumpfile("dump.vcd"); $dumpvars;
       
       
-		run_test("apb_write_test"); // ========================= Promeni na odgovarajuci test i vidi dal treba objections
+    run_test("apb_write_test"); // ========================= Promeni na odgovarajuci test i vidi dal treba objections
 
  
       
-	end
+  end
 
 endmodule:top
-
 
 
 

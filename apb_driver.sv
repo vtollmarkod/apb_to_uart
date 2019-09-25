@@ -19,22 +19,22 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 		super.run_phase (phase);
       	
       	// INIT signal before stimulus
-      	apb_interface_h.paddr = 32'h0;
-        apb_interface_h.prdata = 32'h0;
-      	apb_interface_h.pwdata = 32'h0;
-        apb_interface_h.pwrite = 1'b0;
-        apb_interface_h.psel = 1'b0;
-        apb_interface_h.penable = 1'b0;
-		apb_interface_h.pready = 1'bZ;
+      	apb_interface_h.paddr <= 32'h0;
+        apb_interface_h.prdata <= 32'h0;
+      	apb_interface_h.pwdata <= 32'h0;
+        apb_interface_h.pwrite <= 1'b0;
+        apb_interface_h.psel <= 1'b0;
+        apb_interface_h.penable <= 1'b0;
 			forever begin
             	seq_item_port.get_next_item (req);
-            	//`uvm_info (get_type_name (), $sformatf ("Recived data from sequencer"), UVM_MEDIUM)
               	drive_item (req);
 				seq_item_port.item_done ();
 			end
 	endtask
  
 	virtual task drive_item (apb_sequence_item req); // Nedostaje mi jedna transakcija, procitati sinhro D->S
+
+
       	repeat (req.delay)
            	@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
 				
@@ -51,6 +51,7 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
               	@(posedge apb_interface_h.clk iff (apb_interface_h.pready && !apb_interface_h.rst))
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
+						//req.print();`uvm_info(get_type_name(), "Driver WRITE", UVM_LOW)
 	    	end
 
 	    if(req.mode == READ && apb_interface_h.rst == 0)
@@ -64,6 +65,8 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 	    				req.prdata <= apb_interface_h.prdata; // Put valid data in req
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
+						//`uvm_info(get_type_name(), $sformatf("Driver READ: \n%s", req.sprint()), UVM_LOW)
+						//req.print();`uvm_info(get_type_name(), "Driver READ", UVM_LOW)
 			end	   
 	endtask
 

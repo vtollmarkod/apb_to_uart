@@ -19,40 +19,30 @@ class apb_monitor extends uvm_monitor;
           
 	virtual task run_phase(uvm_phase phase);
 		// Kreiraj paket pokupi sa magistrale sta treba
-      	apb_sequence_item  monitor_data =  apb_sequence_item::type_id::create("monitor_data",this);
-      	forever begin
-			   @(posedge apb_interface_h.clk);
-          		begin
-                monitor_data.paddr<=32'h0;
-                monitor_data.pwdata=32'h0;
-                monitor_data.mode=NONE;
-                  @(negedge apb_interface_h.penable); // Select, Penable,Pready
-                    	begin
-                          monitor_data.paddr = apb_interface_h.paddr;
-                          monitor_data.prdata = apb_interface_h.prdata;
-                          monitor_data.pwdata = apb_interface_h.pwdata;
-							// Sada ovde ne znam delay i koje je operacija to opeglati
-                          if (apb_interface_h.pwrite)
-                            begin
-                              monitor_data.mode = WRITE;
-                          	 monitor_data.delay = 0; // Do I need delay for scoreboard? For now it is 0
-                          	 `uvm_info (get_type_name (), $sformatf ("Monitor WRITE packet"), UVM_MEDIUM)
-                             monitor_data.print();
-                            end
+    apb_sequence_item  monitor_data =  apb_sequence_item::type_id::create("monitor_data",this);
+    forever begin
+			// Get Signal
+      @(posedge apb_interface_h.clk iff !apb_interface_h.rst)
+        if(apb_interface_h.psel && apb_interface_h.penable && apb_interface_h.pready)
+        begin
+          if(apb_interface_h.pwrite) // WRITE
+            begin
+              monitor_data.pwdata <= apb_interface_h.pwdata;
+              monitor_data.paddr <= apb_interface_h.paddr;
+              monitor_data.mode <= WRITE;
+              monitor_data.print();`uvm_info(get_type_name(), "MONITOR WRITE", UVM_LOW)
+            end
+          if(!apb_interface_h.pwrite) // READ
+            begin
+              monitor_data.prdata <= apb_interface_h.prdata;
+              monitor_data.paddr <= apb_interface_h.paddr;
+              monitor_data.mode <= READ;
+              monitor_data.print();`uvm_info(get_type_name(), "MONITOR READ", UVM_LOW)
+            end
+        end
+    end//forever
+  endtask
 
-                          if(!apb_interface_h.pwrite)
-                            begin
-                              monitor_data.mode = READ;
-                              monitor_data.delay = 0;
-                              `uvm_info (get_type_name (), $sformatf ("Monitor READ packet"), UVM_MEDIUM)
-                              monitor_data.print();
-                            end
-                      end//negedege  
-              end//posedge
-            end//forever
-      endtask
-      
-      // PREBACITI PODATKAK KOJI NE CITAN NA FFFF
 
   
   
