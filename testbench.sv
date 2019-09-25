@@ -14,7 +14,12 @@ module top;
 
 
   // Generate Reset signal
-  always  #10 rst=0;
+always  begin
+       #50 rst = 0;
+      #400 rst = 1;
+      #500 rst = 0;
+
+end
 
 // Za test APB-a
 bit pready_tb = 0;

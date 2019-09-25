@@ -36,46 +36,35 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
  
 	virtual task drive_item (apb_sequence_item req); // Nedostaje mi jedna transakcija, procitati sinhro D->S
       	repeat (req.delay)
-           	@(posedge apb_interface_h.clk);
-					
-      	if (req.mode == WRITE)
+           	@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
+				
+      	if (req.mode == WRITE && apb_interface_h.rst == 0)
 	    	begin //SETUP WRITE Phase
 				apb_interface_h.pwrite <= WRITE; // Write is 1 in enum
 				apb_interface_h.psel <= 1; 
 				apb_interface_h.paddr <= req.paddr;
 				apb_interface_h.pwdata <= req.pwdata;
 				// ACTIVE WRITE Phase
-				@(posedge apb_interface_h.clk);
+				@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
 					apb_interface_h.penable <= 1;
 				// Whait for PREADY
-              	@(posedge apb_interface_h.clk iff apb_interface_h.pready==1)
+              	@(posedge apb_interface_h.clk iff (apb_interface_h.pready && !apb_interface_h.rst))
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
 	    	end
 
-	    if(req.mode == READ)
+	    if(req.mode == READ && apb_interface_h.rst == 0)
 	    	begin
 	    		apb_interface_h.pwrite <= READ; // Read is 0 in enum
 	    		apb_interface_h.psel <= 1;
 	    		apb_interface_h.paddr <= req.paddr;
-	    		@(posedge apb_interface_h.clk)
+	    		@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0 )
 	    			apb_interface_h.penable <=1;
-	    		@(posedge apb_interface_h.clk iff apb_interface_h.pready==1)
+	    		@(posedge apb_interface_h.clk iff (apb_interface_h.pready && !apb_interface_h.rst))
 	    				req.prdata <= apb_interface_h.prdata; // Put valid data in req
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
-			end	
-      		
-    
-
-
-		   
+			end	   
 	endtask
-  
-// REKVEST MI MI NE TREBA IMA UGRADJEN U DRAJVER
-// DODATI DA JE DRIVER RESET SENSITIVE !!!
-
-      
-	
 
 endclass:apb_driver
