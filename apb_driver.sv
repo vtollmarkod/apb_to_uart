@@ -14,27 +14,36 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 		if (! uvm_config_db #(virtual apb_interface) :: get (this, "", "apb_interface", apb_interface_h)) 
 			`uvm_fatal (get_type_name (), "Didn't get handle to virtual interface dut_if")
 	endfunction
-          
-	task run_phase (uvm_phase phase);
-		super.run_phase (phase);
-      	
-      	// INIT signal before stimulus
+         
+	task init_driver();
+		// INIT signal before stimulus
       	apb_interface_h.paddr <= 32'h0;
-        apb_interface_h.prdata <= 32'h0;
       	apb_interface_h.pwdata <= 32'h0;
         apb_interface_h.pwrite <= 1'b0;
         apb_interface_h.psel <= 1'b0;
         apb_interface_h.penable <= 1'b0;
+    endtask
+
+	task run_phase (uvm_phase phase);
+		super.run_phase (phase);
+      	init_driver();
+
 			forever begin
             	seq_item_port.get_next_item (req);
-              	drive_item (req);
+              	drive_item ();
 				seq_item_port.item_done ();
 			end
 	endtask
  
-	virtual task drive_item (apb_sequence_item req); 
+	virtual task drive_item (); 
+/*
+		@(posedge apb_interface_h.rst) // Reset se drugacije hendluje
+			begin 
+				apb_interface_h.paddr <= 32'h0;
+				apb_interface_h.pwdata <= 32'h0;
 
-
+			end
+*/
       	repeat (req.delay)
            	@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
 				
@@ -51,7 +60,6 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
               	@(posedge apb_interface_h.clk iff (apb_interface_h.pready && !apb_interface_h.rst))
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
-						//req.print();`uvm_info(get_type_name(), "Driver WRITE", UVM_LOW)
 	    	end
 
 	    if(req.mode == READ && apb_interface_h.rst == 0)
@@ -65,8 +73,6 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 	    				req.prdata <= apb_interface_h.prdata; // Put valid data in req
 						apb_interface_h.psel <= 0;
 						apb_interface_h.penable <= 0;
-						//`uvm_info(get_type_name(), $sformatf("Driver READ: \n%s", req.sprint()), UVM_LOW)
-						//req.print();`uvm_info(get_type_name(), "Driver READ", UVM_LOW)
 			end	   
 	endtask
 

@@ -1,10 +1,10 @@
 `include "uvm_macros.svh"
-`include "packages.sv"
+`include "apb_packages.sv"
 
 
 module top;
   import uvm_pkg::*;
-  import my_pkg::*;
+  import apb_pkg::*;
   
   // Clock & Reset
   bit clk = 0;
