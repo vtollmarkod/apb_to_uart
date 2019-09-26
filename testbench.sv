@@ -6,20 +6,28 @@ module top;
   import uvm_pkg::*;
   import my_pkg::*;
   
-  
-    // Generate clock
+  // Clock & Reset
   bit clk = 0;
   bit rst = 1;
-  always #10 clk = ~clk; 
 
+  // Interface
+  apb_interface apb_interface_h (clk,rst);
 
-  // Generate Reset signal
-always  begin
-       #50 rst = 0;
+  initial begin
+     #500 rst = 0;
       #400 rst = 1;
       #500 rst = 0;
-
 end
+ 
+  initial begin                                // null calling from module *= uvm_test_top
+    uvm_config_db #(virtual apb_interface)::set(null,"*","apb_interface", apb_interface_h);
+    //uvm_top.finish_on_completion = 1;
+    //$dumpfile("dump.vcd"); $dumpvars;
+    run_test("apb_read_write_test"); 
+  end
+
+
+  always #10 clk = ~clk; 
 
 // Za test APB-a
 bit pready_tb = 0;
@@ -38,34 +46,7 @@ always
   
   
 
-// Interface
-  apb_interface apb_interface_h (clk,rst);
 
-// DUT wrapper
-
-
-
-// Database
-  initial begin                   // null calling from module *= uvm_test_top
-      uvm_config_db #(virtual apb_interface)::set(null,"*","apb_interface", apb_interface_h);
-      
-      
-      
-          
-      
-      
-      
-      
-     // You didn't see this Momcilo ;)
-    uvm_top.finish_on_completion = 1;
-    $dumpfile("dump.vcd"); $dumpvars;
-      
-      
-    run_test("apb_write_test"); // ========================= Promeni na odgovarajuci test i vidi dal treba objections
-
- 
-      
-  end
 
 endmodule:top
 

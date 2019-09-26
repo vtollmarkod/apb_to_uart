@@ -18,7 +18,6 @@ class apb_monitor extends uvm_monitor;
      endfunction
           
 	virtual task run_phase(uvm_phase phase);
-		// Kreiraj paket pokupi sa magistrale sta treba
     apb_sequence_item  monitor_data =  apb_sequence_item::type_id::create("monitor_data",this);
     forever begin
 			// Get Signal
@@ -28,12 +27,14 @@ class apb_monitor extends uvm_monitor;
           if(apb_interface_h.pwrite) // WRITE
             begin
               monitor_data.pwdata <= apb_interface_h.pwdata;
+              monitor_data.prdata <= 32'hffff_ffff; // ===== Samo za proveru
               monitor_data.paddr <= apb_interface_h.paddr;
               monitor_data.mode <= WRITE;
               monitor_data.print();`uvm_info(get_type_name(), "MONITOR WRITE", UVM_LOW)
             end
           if(!apb_interface_h.pwrite) // READ
             begin
+              monitor_data.pwdata <= 32'hffff_ffff;
               monitor_data.prdata <= apb_interface_h.prdata;
               monitor_data.paddr <= apb_interface_h.paddr;
               monitor_data.mode <= READ;

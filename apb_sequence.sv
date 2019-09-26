@@ -1,5 +1,5 @@
 
-// READ SEQUENCE
+// READ SEQUENCES
 class apb_read_sequence extends uvm_sequence #(apb_sequence_item);
 	`uvm_object_utils (apb_read_sequence)
 
@@ -8,7 +8,7 @@ class apb_read_sequence extends uvm_sequence #(apb_sequence_item);
 	endfunction
 
 	task body();
-      	repeat(15)
+      	repeat(1)
 			begin
               req = apb_sequence_item::type_id::create("req");
               start_item(req);
@@ -31,7 +31,7 @@ class apb_write_sequence extends uvm_sequence #(apb_sequence_item);
 	endfunction
 
 	task body();
-      repeat(10)
+      repeat(1)
 			begin
               req = apb_sequence_item::type_id::create("req");
               start_item(req);
@@ -46,28 +46,39 @@ class apb_write_sequence extends uvm_sequence #(apb_sequence_item);
 	endtask:body
 endclass:apb_write_sequence
 
-/*    NE VALJA OVAKO BOLJE NAPRAVITI SKEVENCU SA READ AND WRITE !!!!!!!!!!!!1
-// MORE WRITE SEQUENCES
-class more_apb_write_sequence extends uvm_sequence #(apb_sequence_item);
-	`uvm_object_utils(more_apb_write_sequence)
+
+//  READ/WRITE SEQUENCES
+class apb_read_write_sequence extends uvm_sequence #(apb_sequence_item);
+	`uvm_object_utils(apb_read_write_sequence)
 
 	function new(string name = "");
 		super.new(name);
 	endfunction
 
 	rand int n;
-	constraint n_constraint { n inside {[6:9]}; }
+	constraint n_constraint { n inside {[10:15]}; }
 
 	task body();
-		repeat(n);
+		apb_read_sequence req_read;
+		apb_write_sequence req_write;
+		`uvm_info("", $sformatf("UKUPAN BROJ SEKVENCI=%d", n), UVM_MEDIUM);
+		for (int i=0; i<n; i++)
 			begin
-				apb_write_sequence req;
-				req = apb_write_sequence::type_id::create("req");
-				//req.start(apb_sequencer_h,this); // ==========NE RADI OVO !!!Zato sto sekvenca zove sekvencu
-			end
+				if (i%2 == 0)
+					begin
+						req_read = apb_read_sequence::type_id::create("req_read");
+						req_read.start(m_sequencer,this);
+					end
+      			else
+      				begin
+						req_write = apb_write_sequence::type_id::create("req_write");
+						req_write.start(m_sequencer,this);
+      				end
+      		end//for
 	endtask:body
-endclass:more_apb_write_sequence
+endclass:apb_read_write_sequence
 
-// MORE READ/WRITE SEQUENCES
 
+/*
+read_modify_write je osnovna sekvenca
 */

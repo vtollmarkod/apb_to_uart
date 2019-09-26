@@ -41,3 +41,7 @@ PREPRAVKE :
 2. Sinhronizovati pread i pready sa clk ! Potom proveriti APB drajver i monitor.
 3. Los deo READ drajvera, mora se drugacije imeplementirati posto me zezaju ivice!!! Drugi uslob iskoristiti.
 	Greska se javlja na repeat(4)
+
+
+u sekvenci start_item(tx); sluzi za sinhronizaciju sa drajverom! Kada se start_item vrati od drajvera drajver je spreman da primi transakciju.
+finish item sluzi da se posalje sekvenca ka drajveru
