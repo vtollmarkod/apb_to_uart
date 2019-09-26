@@ -25,10 +25,8 @@ end
     //$dumpfile("dump.vcd"); $dumpvars;
     run_test("apb_read_write_test"); 
   end
-
-
+// Togle clock
   always #10 clk = ~clk; 
-
 // Za test APB-a
 bit pready_tb = 0;
 always
@@ -40,19 +38,5 @@ always
     apb_interface_h.prdata <= $urandom_range(100,1000);
   end
 
-  
-  
-  
-  
-  
-
-
 
 endmodule:top
-
-
-
-
-
-
-

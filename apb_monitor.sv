@@ -27,7 +27,7 @@ class apb_monitor extends uvm_monitor;
           if(apb_interface_h.pwrite) // WRITE
             begin
               monitor_data.pwdata <= apb_interface_h.pwdata;
-              monitor_data.prdata <= 32'hffff_ffff; // ===== Samo za proveru
+              monitor_data.prdata <= 32'hffff_ffff; // ===== Just to check data
               monitor_data.paddr <= apb_interface_h.paddr;
               monitor_data.mode <= WRITE;
               monitor_data.print();`uvm_info(get_type_name(), "MONITOR WRITE", UVM_LOW)

@@ -43,5 +43,5 @@ PREPRAVKE :
 	Greska se javlja na repeat(4)
 
 
-u sekvenci start_item(tx); sluzi za sinhronizaciju sa drajverom! Kada se start_item vrati od drajvera drajver je spreman da primi transakciju.
+U sekvenci start_item(tx); sluzi za sinhronizaciju sa drajverom! Kada se start_item vrati od drajvera drajver je spreman da primi transakciju.
 finish item sluzi da se posalje sekvenca ka drajveru

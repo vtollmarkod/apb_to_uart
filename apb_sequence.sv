@@ -79,6 +79,3 @@ class apb_read_write_sequence extends uvm_sequence #(apb_sequence_item);
 endclass:apb_read_write_sequence
 
 
-/*
-read_modify_write je osnovna sekvenca
-*/

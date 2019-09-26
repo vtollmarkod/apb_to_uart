@@ -8,13 +8,8 @@ class apb_write_test extends uvm_test;
 	// Define enviroment
 	my_enviroment my_enviroment_h;
 
-	// Define configuration object
-	//my_configuration my_configuration_h; // ==================== iskoristiti kada se podeli interface na apb i uart
-
 	function void build_phase(uvm_phase phase);
 		my_enviroment_h = my_enviroment::type_id::create("my_enviroment_h", this);
-		//my_configuration_h = my_configuration::type_id::create("my_configuration_h", this);
-		//uvm_config_db #(my_configuration)::set(this,"m_top_env.my_agent","my_configuration_h",my_configuration_h)
 	endfunction
 
 
@@ -42,13 +37,8 @@ class apb_read_test extends uvm_test;
 	// Define enviroment
 	my_enviroment my_enviroment_h;
 
-	// Define configuration object
-	//my_configuration my_configuration_h; // ==================== iskoristiti kada se podeli interface na apb i uart
-
 	function void build_phase(uvm_phase phase);
 		my_enviroment_h = my_enviroment::type_id::create("my_enviroment_h", this);
-		//my_configuration_h = my_configuration::type_id::create("my_configuration_h", this);
-		//uvm_config_db #(my_configuration)::set(this,"m_top_env.my_agent","my_configuration_h",my_configuration_h)
 	endfunction
 
 
@@ -95,7 +85,3 @@ class apb_read_write_test extends uvm_test;
 
 endclass:apb_read_write_test
 
-/*
-
-read_wirte_seq je osnovna sekvenca iz primera
-*/

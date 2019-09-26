@@ -7,7 +7,7 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 	endfunction
 
 	virtual apb_interface apb_interface_h;
-  	//apb_sequence_item req;
+
   
 	virtual function void build_phase (uvm_phase phase);
 		super.build_phase (phase);
@@ -32,7 +32,7 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 			end
 	endtask
  
-	virtual task drive_item (apb_sequence_item req); // Nedostaje mi jedna transakcija, procitati sinhro D->S
+	virtual task drive_item (apb_sequence_item req); 
 
 
       	repeat (req.delay)
