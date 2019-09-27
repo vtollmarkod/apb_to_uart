@@ -9,7 +9,7 @@ class uart_agent extends uvm_agent;
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		//  |---START---|---BIT 0:7---|---STOP---|
+		//  |---START---|---BIT 7:0---|---STOP---|
 		uart_monitor_h = uart_monitor::type_id::create("uart_monitor_h",this);
 	endfunction
 endclass:uart_agent

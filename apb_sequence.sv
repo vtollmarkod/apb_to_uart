@@ -1,5 +1,4 @@
-
-// READ SEQUENCES
+// READ SEQUENCES 
 class apb_read_sequence extends uvm_sequence #(apb_sequence_item);
 	`uvm_object_utils (apb_read_sequence)
 

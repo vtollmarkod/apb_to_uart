@@ -1,4 +1,4 @@
-interface uart_interface (input rst, input uart_clk);
+interface uart_interface (input rst, input clk);
 	logic rx;
 	logic tx;
 endinterface
