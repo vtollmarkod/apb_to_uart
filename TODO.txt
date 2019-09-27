@@ -14,13 +14,25 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html
 https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/
 
+m_sequencer 
+https://www.chipverify.com/blog/what-is-the-m-sequencer
 
+Struktura UVC, korisno
+https://verificationacademy.com/cookbook/uvc/uvmverificationcomponent
 
+Organizacija fajlova:
+https://verificationacademy.com/cookbook/package/organization
 
 PROCITATI :
 
 verilab.com/files/use_the_sequence_luke_1.pdf
 https://www.youtube.com/watch?v=S2JTr4uQwks
+
+Simple Protocol UVCs are normally agents, not environments. They are instantiated singly, one per interface. The environment they should be instantiated within is the user's test environment for that DUT testbench. Only the user can know what should be in that environment. Only the user can know what sub-environments may be defined to allow vertical reuse of a collection of agents and related analysis components.
+
+
+
+
 
 Dobar clanak o konfiguracionim objektima
 http://www.learnuvmverification.com/index.php/2015/07/22/uvm-configuration-object-concept/

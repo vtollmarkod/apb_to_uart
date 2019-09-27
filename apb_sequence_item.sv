@@ -1,5 +1,5 @@
 typedef enum {READ,WRITE,NONE} rw_mode;
-
+// TRANSACTION
 
 class apb_sequence_item extends uvm_sequence_item;
 	

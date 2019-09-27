@@ -1,10 +1,13 @@
 `include "uvm_macros.svh"
 `include "apb_packages.sv"
+`include "uart_packages.sv"
+`include "my_enviroment.sv"
 
 
 module top;
   import uvm_pkg::*;
   import apb_pkg::*;
+  import uart_pkg::*;
   
   // Clock & Reset
   bit clk = 0;
@@ -12,6 +15,7 @@ module top;
 
   // Interface
   apb_interface apb_interface_h (clk,rst);
+  uart_interface uart_interface_h (clk,rst); 
 
   initial begin
      #500 rst = 0;
@@ -21,6 +25,7 @@ end
  
   initial begin                                // null calling from module *= uvm_test_top
     uvm_config_db #(virtual apb_interface)::set(null,"*","apb_interface", apb_interface_h);
+    uvm_config_db #(virtual uart_interface)::set(null,"*","uart_interface", uart_interface_h);
     //uvm_top.finish_on_completion = 1;
     //$dumpfile("dump.vcd"); $dumpvars;
     run_test("apb_read_write_test"); 
