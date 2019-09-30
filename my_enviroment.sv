@@ -1,8 +1,7 @@
 class my_enviroment extends uvm_env;
 	`uvm_component_utils (my_enviroment)
 
-  import apb_agent_pkg::*;
-  import uart_agent_pkg::*;
+
 
 	apb_agent apb_agent_h;
   uart_agent uart_agent_h;
