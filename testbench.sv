@@ -9,6 +9,10 @@ module top;
   import apb_agent_pkg::*;
   import uart_agent_pkg::*;
 
+  `include "my_enviroment.sv"
+  `include "apb_tests.sv" 
+
+
   // Clock & Reset
   bit clk = 0;
   bit rst = 1;
