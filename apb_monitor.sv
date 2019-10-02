@@ -3,7 +3,8 @@ class apb_monitor extends uvm_monitor;
 
   	virtual apb_interface apb_interface_h;
   	uvm_analysis_port #(apb_sequence_item)   apb_monitor_analysis_port;
-  
+    apb_cfg monitor_cfg_h; // Holds vitrual interface
+
   
 	function new (string name, uvm_component parent= null);
     	super.new (name, parent);
@@ -13,8 +14,10 @@ class apb_monitor extends uvm_monitor;
 		super.build_phase (phase);
     
 		apb_monitor_analysis_port = new("apb_monitor_analysis_port",this);
-		if (! uvm_config_db #(virtual apb_interface) :: get (this, "", "apb_interface", apb_interface_h)) 
-			`uvm_fatal (get_type_name (), "Didn't get handle to virtual interface apb_interface")
+		if (! uvm_config_db #(apb_cfg) :: get (this, "", "apb_agent_cfg_h", monitor_cfg_h)) 
+          begin `uvm_fatal (get_type_name (), "Didn't get handle to virtual interface apb_interface") end
+    	apb_interface_h = monitor_cfg_h.apb_interface_h;
+          
      endfunction
           
 	virtual task run_phase(uvm_phase phase);
@@ -30,7 +33,7 @@ class apb_monitor extends uvm_monitor;
               monitor_data.prdata <= apb_interface_h.prdata;
               monitor_data.paddr <= apb_interface_h.paddr;
               monitor_data.mode <= WRITE;
-              monitor_data.print();`uvm_info(get_type_name(), "MONITOR WRITE", UVM_LOW) 
+              //monitor_data.print();`uvm_info(get_type_name(), "MONITOR WRITE", UVM_LOW) 
 
               //$psprintf("MONITOR WRITE \n %s",monitor_data.sprint());
               //`uvm_info({get_type_name()," : ID"},$psprintf("Printing Object \n %s",monitor_data.sprint()),UVM_HIGH)
@@ -41,7 +44,7 @@ class apb_monitor extends uvm_monitor;
               monitor_data.prdata <= apb_interface_h.prdata;
               monitor_data.paddr <= apb_interface_h.paddr;
               monitor_data.mode <= READ;
-              monitor_data.print();`uvm_info(get_type_name(), "MONITOR READ", UVM_LOW)
+              //monitor_data.print();`uvm_info(get_type_name(), "MONITOR READ", UVM_LOW)
               //$psprintf("MONITOR READ \n %s",monitor_data.sprint());
 
             end

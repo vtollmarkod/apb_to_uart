@@ -1,7 +1,8 @@
 	`include "apb_interface.sv"
+
 package apb_agent_pkg;
     import uvm_pkg::*;
-    //`include "apb_configuration.sv"
+	`include "apb_configuration.sv"
     `include "apb_sequence_item.sv" 
     `include "apb_sequencer.sv"
     `include "apb_sequence.sv"

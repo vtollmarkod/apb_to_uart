@@ -1,18 +1,20 @@
 class apb_driver extends uvm_driver #(apb_sequence_item);
 	`uvm_component_utils (apb_driver)
-
+  	
+  	apb_cfg driver_cfg_h; // Holds vitrual interface
+	virtual apb_interface apb_interface_h;			// Mogao bih da dodam initial reset u drajveru, RESET pronaci u UVM cookbook
   
 	function new(string name, uvm_component parent);
 		super.new(name, parent);
 	endfunction
 
-	virtual apb_interface apb_interface_h;
-
   
 	virtual function void build_phase (uvm_phase phase);
 		super.build_phase (phase);
-		if (! uvm_config_db #(virtual apb_interface) :: get (this, "", "apb_interface", apb_interface_h)) 
-			`uvm_fatal (get_type_name (), "Didn't get handle to virtual interface dut_if")
+		
+      	if (! uvm_config_db #(apb_cfg) :: get (this, "", "apb_agent_cfg_h", driver_cfg_h)) 
+          `uvm_fatal (get_type_name (), "Didn't get configuration object")
+          apb_interface_h = driver_cfg_h.apb_interface_h;
 	endfunction
          
 	task init_driver();

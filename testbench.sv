@@ -1,8 +1,7 @@
 `include "uvm_macros.svh"
 `include "apb_packages.sv"
 `include "uart_packages.sv"
-//`include "my_enviroment.sv"
-
+//`include "my_virtual_sequencer.sv"
 
 module top;
   import uvm_pkg::*;
@@ -11,8 +10,7 @@ module top;
 
   `include "my_enviroment.sv"
   `include "apb_tests.sv" 
-
-
+  
   // Clock & Reset
   bit clk = 0;
   bit rst = 1;
@@ -23,16 +21,26 @@ module top;
 
   initial begin
      #500 rst = 0;
-      #400 rst = 1;
-      #500 rst = 0;
+     #400 rst = 1;
+     #500 rst = 0;
 end
  
-  initial begin                                
-    uvm_config_db #(virtual apb_interface)::set(null,"*","apb_interface", apb_interface_h);
-    uvm_config_db #(virtual uart_interface)::set(null,"*","uart_interface", uart_interface_h);
-    //uvm_top.finish_on_completion = 1;
-    //$dumpfile("dump.vcd"); $dumpvars;
-    run_test(); //"apb_read_write_test"
+  initial begin				
+    // Set APB virtual interface to apb test only
+    uvm_config_db #(virtual apb_interface)::set(uvm_root::get(),"uvm_test_top","apb_interface", apb_interface_h); //uvm_root::get()
+    
+    // Set UART virtual interface to all subcomponent it is hardcoded to be passive
+    uvm_config_db #(virtual uart_interface)::set(uvm_root::get(),"*","uart_interface", uart_interface_h); 
+    
+      
+    // Dump database
+    //uvm_config_db #(int)::dump();
+
+    
+    
+    uvm_top.finish_on_completion = 1;
+    $dumpfile("dump.vcd"); $dumpvars;
+    run_test("apb_write_test"); //
   end
 // Togle clock
   always #10 clk = ~clk; 
