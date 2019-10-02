@@ -1,14 +1,16 @@
 `include "uvm_macros.svh"
 `include "apb_packages.sv"
 `include "uart_packages.sv"
-//`include "my_virtual_sequencer.sv"
+//`include "environment_packages.sv"
+
 
 module top;
   import uvm_pkg::*;
   import apb_agent_pkg::*;
   import uart_agent_pkg::*;
+ // import environment_pkg::*;
 
-  `include "my_enviroment.sv"
+  `include "my_environment.sv"
   `include "apb_tests.sv" 
   
   // Clock & Reset
@@ -25,7 +27,7 @@ module top;
      #500 rst = 0;
 end
  
-  initial begin				
+  initial begin       
     // Set APB virtual interface to apb test only
     uvm_config_db #(virtual apb_interface)::set(uvm_root::get(),"uvm_test_top","apb_interface", apb_interface_h); //uvm_root::get()
     

@@ -2,6 +2,7 @@
 
 package apb_agent_pkg;
     import uvm_pkg::*;
+    `include "uvm_macros.svh"
 	`include "apb_configuration.sv"
     `include "apb_sequence_item.sv" 
     `include "apb_sequencer.sv"
