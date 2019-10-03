@@ -33,9 +33,9 @@ end
 
     
     
-    uvm_top.finish_on_completion = 1;
-    $dumpfile("dump.vcd"); $dumpvars;
-    run_test("apb_write_test"); //
+    //uvm_top.finish_on_completion = 1;
+    //$dumpfile("dump.vcd"); $dumpvars;
+    run_test(); //"apb_write_test"
   end
 // Togle clock
   always #10 clk = ~clk; 
