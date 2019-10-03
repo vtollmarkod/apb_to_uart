@@ -1,3 +1,11 @@
+vcs -sverilog -full64 +vcs+vcdpluson -timescale=1ns/1ps -debug_access+r+w+nomemcbk -debug_region+cell +vpi +incdir+uart_agent/ +incdir+apb_agent/ +incdir+test_pkg/ uart_agent/uart_packages.sv apb_agent/apb_packages.sv test_pkg/test_packages.sv testbench.sv -l apb_to_uart.log -debug_acc+all -lca -R -ntb_opts uvm-1.2 +UVM_TESTNAME=apb_write_test
+
+
+
+
+
+
+
 1. git status
 2. git add .
 3. git commit -m "Your message about the commit"
