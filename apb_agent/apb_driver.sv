@@ -38,14 +38,18 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 	endtask
  
 	virtual task drive_item (); 
-/*
-		@(posedge apb_interface_h.rst) // Reset se drugacije hendluje
-			begin 
-				apb_interface_h.paddr <= 32'h0;
-				apb_interface_h.pwdata <= 32'h0;
-
+		// This is independent  from clk 
+		if(apb_interface_h.rst==1) //cookbook 79
+			begin
+				apb_interface_h.paddr <= 0;
+				apb_interface_h.pwdata <= 0; 
+				apb_interface_h.psel <=0; 
+				apb_interface_h.penable <=0;
+				apb_interface_h.prdata <= 0; //clear readed data
+				apb_interface_h.pwrite <= 0; // put it read mode
+				wait(apb_interface_h.rst == 0);
 			end
-*/
+
       	repeat (req.delay)
            	@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
 				
