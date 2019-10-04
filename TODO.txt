@@ -1,25 +1,25 @@
 vcs -sverilog -full64 +vcs+vcdpluson -timescale=1ns/1ps -debug_access+r+w+nomemcbk -debug_region+cell +vpi +incdir+uart_agent/ +incdir+apb_agent/ +incdir+test_pkg/ uart_agent/uart_packages.sv apb_agent/apb_packages.sv test_pkg/test_packages.sv testbench.sv -l apb_to_uart.log -debug_acc+all -lca -R -ntb_opts uvm-1.2 +UVM_TESTNAME=apb_write_test
 
 setenv COGITA_HOME /tools/vtool/cogita/latest
-
 $COGITA_HOME/cogita.sh &
 
 
-
-
-
+********************* GIT *********************
 
 1. git status
 2. git add .
 3. git commit -m "Your message about the commit"
 4. git push origin master
-5. vtollmarkod praksa2019
+5. vtollmarkod pass
 6. git pull origin master
 https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners 
-
 (git config --global user.name "markod"   git config --global user.email markod@thevtool.com)
+***********************************************
+
 
 vcs -sverilog -full64 +vcs+vcdpluson -timescale=1ns/1ps -debug_access+r+w+nomemcbk -debug_region+cell +vpi testbench.sv design.sv -l apb_to_uart.log -debug_acc+all -lca -R -ntb_opts uvm-1.2 +UVM_TESTNAME=apb_write_test
+
+PROCITATI :
 
 https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html
@@ -34,37 +34,12 @@ https://verificationacademy.com/cookbook/uvc/uvmverificationcomponent
 Organizacija fajlova:
 https://verificationacademy.com/cookbook/package/organization
 
-PROCITATI :
 
 verilab.com/files/use_the_sequence_luke_1.pdf
 https://www.youtube.com/watch?v=S2JTr4uQwks
-
-Simple Protocol UVCs are normally agents, not environments. They are instantiated singly, one per interface. The environment they should be instantiated within is the user's test environment for that DUT testbench. Only the user can know what should be in that environment. Only the user can know what sub-environments may be defined to allow vertical reuse of a collection of agents and related analysis components.
-
-
-
 
 
 Dobar clanak o konfiguracionim objektima
 http://www.learnuvmverification.com/index.php/2015/07/22/uvm-configuration-object-concept/
 http://www.learnuvmverification.com/index.php/2015/07/13/application-of-virtual-interface-and-uvm_config_db/
 
-Sekvencu sekvenci mora da prvo randomizujem iz testa, pa onda pokrecem na zadatom sekvenceru
-
-ALWAYS Block
-= is blocking statement. In an always block, the line of code will be executed only after it's previous line has executed. Hence, they happens one after the other, just like combinatoral logics in loop.
-
-<= is non-blocking in nature. This means that in an always block, every line will be executed in parallel. Hence leading to implementation of sequential elements.
-
-
-
-PREPRAVKE :
-
-1. Monitor radi na negedge ne treba tako
-2. Sinhronizovati pread i pready sa clk ! Potom proveriti APB drajver i monitor.
-3. Los deo READ drajvera, mora se drugacije imeplementirati posto me zezaju ivice!!! Drugi uslob iskoristiti.
-	Greska se javlja na repeat(4)
-
-
-U sekvenci start_item(tx); sluzi za sinhronizaciju sa drajverom! Kada se start_item vrati od drajvera drajver je spreman da primi transakciju.
-finish item sluzi da se posalje sekvenca ka drajveru
