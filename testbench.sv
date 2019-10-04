@@ -5,7 +5,7 @@ module top; // cookbook 50,59
 
 
 
-  
+
   // Clock & Reset
   bit clk = 0;
   bit rst = 1;
@@ -15,9 +15,9 @@ module top; // cookbook 50,59
   uart_interface uart_interface_h (clk,rst); 
 
   initial begin
-     #500 rst = 0;
-     #400 rst = 1;
-     #500 rst = 0;
+    rst = 1;
+    #50
+    rst = 0;
 end
  
   initial begin     

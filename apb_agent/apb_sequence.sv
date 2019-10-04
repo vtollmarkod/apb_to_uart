@@ -45,7 +45,7 @@ class apb_write_sequence extends uvm_sequence #(apb_sequence_item);
 	endtask:body
 endclass:apb_write_sequence
 
-
+/* OVO TESTIRATI PREKO VIRTUELNOG SEKVENCERA
 //  READ/WRITE SEQUENCES
 class apb_read_write_sequence extends uvm_sequence #(apb_sequence_item);
 	`uvm_object_utils(apb_read_write_sequence)
@@ -78,3 +78,4 @@ class apb_read_write_sequence extends uvm_sequence #(apb_sequence_item);
 endclass:apb_read_write_sequence
 
 
+*/
