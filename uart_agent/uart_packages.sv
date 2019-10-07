@@ -6,4 +6,5 @@ package uart_agent_pkg;
 	`include "uart_sequence_item.sv"
 	`include "uart_monitor.sv"
 	`include "uart_agent.sv"
+	`include "uart_configuration.sv"
 endpackage:uart_agent_pkg

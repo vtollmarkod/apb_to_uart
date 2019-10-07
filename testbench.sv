@@ -19,6 +19,9 @@ module top; // cookbook 50,59
     #50
     rst = 0;
 end
+
+// Togle clock
+  always #10 clk = ~clk; 
  
   initial begin     
     // Set APB virtual interface to apb test only
@@ -26,19 +29,14 @@ end
     
     // Set UART virtual interface to all subcomponent it is hardcoded to be passive
     uvm_config_db #(virtual uart_interface)::set(uvm_root::get(),"*","uart_interface", uart_interface_h); 
-    
       
     // Dump database
     //uvm_config_db #(int)::dump();
-
-    
-    
     //uvm_top.finish_on_completion = 1;
     //$dumpfile("dump.vcd"); $dumpvars;
     run_test(); //"apb_write_test"
   end
-// Togle clock
-  always #10 clk = ~clk; 
+ 
 // Za test APB-a
 bit pready_tb = 0;
 always

@@ -3,20 +3,18 @@ class apb_monitor extends uvm_monitor;
 
   	virtual apb_interface apb_interface_h;
   	uvm_analysis_port #(apb_sequence_item)   apb_monitor_analysis_port;
-    apb_cfg monitor_cfg_h; // Holds vitrual interface
-
   
-	function new (string name, uvm_component parent= null);
+	 function new (string name, uvm_component parent);
     	super.new (name, parent);
-	endfunction
+	 endfunction
   	
-  virtual function void build_phase(uvm_phase phase);
-		super.build_phase (phase);
+    virtual function void build_phase(uvm_phase phase);
+		  super.build_phase (phase);
     
 		apb_monitor_analysis_port = new("apb_monitor_analysis_port",this);
-		if (! uvm_config_db #(apb_cfg) :: get (this, "", "apb_agent_cfg_h", monitor_cfg_h)) 
-          begin `uvm_fatal (get_type_name (), "Didn't get handle to virtual interface apb_interface") end
-    	apb_interface_h = monitor_cfg_h.apb_interface_h;
+
+        if (! uvm_config_db #(virtual apb_interface) :: get (this, "", "virtual_apb_interface", apb_interface_h)) 
+          begin `uvm_fatal (get_type_name (), "Didn't get virtual interface") end
           
      endfunction
           

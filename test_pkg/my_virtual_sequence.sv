@@ -20,12 +20,8 @@ class my_virtual_sequence extends uvm_sequence;
   // and assigned to be run with my_virtual_sequencer
 
   task body();
-    repeat(3);
-    apb_write_sequence_vh.start(p_sequencer.apb_sequencer_h);
-    repeat(2)
-    apb_read_sequence_vh.start(p_sequencer.apb_sequencer_h);
-    #50;
-    apb_write_sequence_vh.start(p_sequencer.apb_sequencer_h);
+    repeat(6)
+      apb_write_sequence_vh.start(p_sequencer.apb_sequencer_h);
   endtask
 
 endclass:my_virtual_sequence
