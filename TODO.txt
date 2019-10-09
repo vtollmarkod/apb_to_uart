@@ -4,6 +4,13 @@ setenv COGITA_HOME /tools/vtool/cogita/latest
 $COGITA_HOME/cogita.sh &
 
 
+1. Preimenovati i pomeriti sekvence iz APB u drugi paket
+2. Monitor treba da prima prepakuje na MSB -> LSB
+
+
+
+
+
 ********************* GIT *********************
 
 1. git status
