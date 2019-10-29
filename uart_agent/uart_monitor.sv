@@ -4,8 +4,7 @@ class uart_monitor extends uvm_monitor;
 	virtual uart_interface uart_interface_h;
 	uvm_analysis_port #(uart_sequence_item)  uart_monitor_analysis_port; 
 	
-	int data_lenght=30; // Koliko sistemskih klokova traje simbol
-	bit [7:0] data; // Recived data
+	bit [31:0] data; // Recived data
 	bit reciving_data_progres =0;
   	enum {VALID, CORRUPTED} recived_data_check;
 
@@ -31,41 +30,34 @@ class uart_monitor extends uvm_monitor;
                     reciving_data_progres = 1; // Block reciving data
 
                     // Wait START bit
-                    repeat(data_lenght/2) 
                         @(posedge uart_interface_h.clk)
+                            begin 
+                                if (uart_interface_h.tx == 0)
+                                    recived_data_check=VALID;
+                                else 
+                                    recived_data_check=CORRUPTED;
+                            end
 
-           			// Check START bit
-                    if (uart_interface_h.clk == 0)
-                    	recived_data_check = VALID;
-                    else
-                    	recived_data_check = CORRUPTED;
-
-                    // Sample DATA bits MSB -> LSB
-                    for (int i=0 ; i<8 ; i++)
+                    // Recive bits from LSB to MSB
+                        for(int i=31; i==0; i--)
                         begin
-                            repeat(data_lenght)
-                                @(posedge uart_interface_h.clk) // ==== Proveriti ovaj deo !
-                        data[i] = uart_interface_h.tx; 
+                            @(posedge uart_interface_h.clk)
+                                data[i]=uart_interface_h.tx;
                         end
                     // Wait STOP bit
-                    repeat(data_lenght)
                         @(posedge uart_interface_h.clk)
+                            begin 
+                                if (uart_interface_h.tx == 1)
+                                    recived_data_check=VALID;
+                                else 
+                                    recived_data_check=CORRUPTED;
+                            end
+                        if (recived_data_check == VALID)
+                            uart_data.frame = data;
 
-                    // Check STOP bit
-                    if (uart_interface_h.clk == 1)
-                    	recived_data_check = VALID;
-                  	else
-                      recived_data_check = CORRUPTED;
-
-                    // STOP bit is 1, now it is safe to enable detecting new START bit
-                  if (recived_data_check == VALID)
-					begin
-						uart_data.frame <= data;
-                    	reciving_data_progres <= 0;
-						recived_data_check <= CORRUPTED;
-                    end
+                        //Enable reciving data
+                        reciving_data_progres = 0;
                 end//posedge
-    		
         end//forever
     endtask
 endclass:uart_monitor

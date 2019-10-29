@@ -1,6 +1,6 @@
 
 class uart_sequence_item extends uvm_sequence_item;
-	 bit [7:0] frame;
+	 bit [31:0] frame;
 
   	function new (string name = "");
 		super.new(name);

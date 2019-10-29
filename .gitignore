@@ -1,0 +1,10 @@
+*.vcd
+*.log
+*.h
+*.vpd
+*.key
+/csrc
+/simv.daidir
+.nfs*
+simv
+simv.cst/

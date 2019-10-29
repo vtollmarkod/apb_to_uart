@@ -1,8 +1,7 @@
 class apb_driver extends uvm_driver #(apb_sequence_item);
 	`uvm_component_utils (apb_driver)
   	
-  	apb_cfg driver_cfg_h; // Holds vitrual interface
-	virtual apb_interface apb_interface_h;			// Mogao bih da dodam initial reset u drajveru, RESET pronaci u UVM cookbook
+	virtual apb_interface apb_interface_h;
   
 	function new(string name, uvm_component parent);
 		super.new(name, parent);
@@ -11,10 +10,11 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
   
 	virtual function void build_phase (uvm_phase phase);
 		super.build_phase (phase);
+
 		
-      	if (! uvm_config_db #(apb_cfg) :: get (this, "", "apb_agent_cfg_h", driver_cfg_h)) 
-          `uvm_fatal (get_type_name (), "Didn't get configuration object")
-          apb_interface_h = driver_cfg_h.apb_interface_h;
+      	if (! uvm_config_db #(virtual apb_interface) :: get (this, "", "virtual_apb_interface", apb_interface_h)) 
+          begin `uvm_fatal (get_type_name (), "Didn't get virtual interface") end
+
 	endfunction
          
 	task init_driver();
@@ -38,14 +38,18 @@ class apb_driver extends uvm_driver #(apb_sequence_item);
 	endtask
  
 	virtual task drive_item (); 
-/*
-		@(posedge apb_interface_h.rst) // Reset se drugacije hendluje
-			begin 
-				apb_interface_h.paddr <= 32'h0;
-				apb_interface_h.pwdata <= 32'h0;
-
+		// This is independent  from clk 
+		if(apb_interface_h.rst==1) //cookbook 79
+			begin
+				apb_interface_h.paddr <= 0;
+				apb_interface_h.pwdata <= 0; 
+				apb_interface_h.psel <=0; 
+				apb_interface_h.penable <=0;
+				apb_interface_h.prdata <= 0; //clear readed data
+				apb_interface_h.pwrite <= 0; // put it read mode
+				wait(apb_interface_h.rst == 0);
 			end
-*/
+
       	repeat (req.delay)
            	@(posedge apb_interface_h.clk iff apb_interface_h.rst == 0);
 				
